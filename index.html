@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cut Plan — Summer 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0d;
+    --surface: #181814;
+    --surface2: #1f1f1a;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8e4d9;
+    --muted: #7a7668;
+    --teal: #1d9e75;
+    --teal-lt: rgba(29,158,117,0.12);
+    --amber: #c4831a;
+    --amber-lt: rgba(196,131,26,0.12);
+    --coral: #d85a30;
+    --coral-lt: rgba(216,90,48,0.12);
+    --purple: #7c74e0;
+    --purple-lt: rgba(124,116,224,0.12);
+    --climb: #4a9eda;
+    --climb-lt: rgba(74,158,218,0.12);
+    --green: #5a9e3a;
+    --green-lt: rgba(90,158,58,0.12);
+    --radius: 10px;
+    --font-body: 'DM Mono', monospace;
+    --font-display: 'Fraunces', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,15,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 52px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    white-space: nowrap;
+    margin-right: 32px;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .nav-link {
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 12px;
+    border: none;
+    background: none;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-link:hover { color: var(--text); background: var(--surface2); }
+  .nav-link.active { color: var(--text); background: var(--surface2); }
+
+  /* LAYOUT */
+  .page { display: none; padding: 32px 24px; max-width: 800px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* TYPOGRAPHY */
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 20px;
+    margin-bottom: 16px;
+    margin-top: 32px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+  h3 {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+  p { color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+  strong { color: var(--text); font-weight: 500; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-accent-teal  { border-left: 3px solid var(--teal);   background: var(--teal-lt); }
+  .card-accent-amber { border-left: 3px solid var(--amber);  background: var(--amber-lt); }
+  .card-accent-coral { border-left: 3px solid var(--coral);  background: var(--coral-lt); }
+  .card-accent-purple{ border-left: 3px solid var(--purple); background: var(--purple-lt); }
+  .card-accent-climb { border-left: 3px solid var(--climb);  background: var(--climb-lt); }
+  .card-accent-green { border-left: 3px solid var(--green);  background: var(--green-lt); }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  /* STATS ROW */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .stat-val { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--text); }
+
+  /* PHASE CARDS */
+  .phases { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .phase-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .phase-name { font-size: 13px; font-weight: 500; }
+  .phase-weeks { font-size: 11px; color: var(--muted); }
+  .phase-sub { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  .phase-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* MACRO BARS */
+  .macro-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .macro-label { font-size: 11px; color: var(--muted); width: 52px; flex-shrink: 0; }
+  .macro-track { flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .macro-fill { height: 100%; border-radius: 2px; }
+  .macro-val { font-size: 11px; font-weight: 500; width: 36px; text-align: right; flex-shrink: 0; }
+
+  /* WEEK TABS */
+  .week-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+  .week-tab {
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .week-tab:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .week-tab.active { color: var(--text); background: var(--surface2); border-color: rgba(255,255,255,0.2); }
+  .week-panel { display: none; }
+  .week-panel.active { display: block; }
+
+  /* SCHEDULE TABLE */
+  .schedule-wrap { overflow-x: auto; margin-bottom: 16px; }
+  .schedule {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    min-width: 560px;
+  }
+  .schedule th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .schedule td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    vertical-align: top;
+  }
+  .schedule tr:last-child td { border-bottom: none; }
+  .schedule td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .schedule td.dinner { color: var(--text); }
+  .row-climb td { background: var(--climb-lt); }
+  .row-climb td:first-child { color: var(--climb); }
+  .row-batch td { background: var(--amber-lt); }
+  .row-batch td:first-child { color: var(--amber); }
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: 4px;
+  }
+  .badge-climb { background: var(--climb-lt); color: var(--climb); }
+  .badge-batch { background: var(--amber-lt); color: var(--amber); }
+
+  /* MACRO TABLE */
+  .mtable-wrap { overflow-x: auto; margin-bottom: 16px; }
+  .mtable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    min-width: 480px;
+  }
+  .mtable th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 500;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .mtable th.num, .mtable td.num { text-align: center; }
+  .mtable td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .mtable tr:last-child td { border-bottom: none; font-weight: 500; color: var(--text); }
+  .mtable td:first-child { color: var(--text); }
+  .mtable tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* RECIPE CARDS */
+  .recipe {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .recipe-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .recipe-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .recipe-macros { font-size: 11px; color: var(--muted); }
+  .recipe-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  @media (max-width: 500px) { .recipe-body { grid-template-columns: 1fr; } }
+  .recipe-ing { padding: 14px 16px; border-right: 1px solid var(--border); }
+  .recipe-steps { padding: 14px 16px; }
+  .recipe-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; }
+  .ing-row { display: flex; gap: 10px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .ing-row:last-child { border-bottom: none; }
+  .ing-qty { font-size: 11px; font-weight: 500; color: var(--teal); min-width: 60px; flex-shrink: 0; }
+  .ing-name { font-size: 11px; color: var(--muted); }
+  .step-row { display: flex; gap: 10px; padding: 4px 0; }
+  .step-num { font-size: 11px; font-weight: 500; color: var(--purple); min-width: 16px; flex-shrink: 0; }
+  .step-text { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .recipe-note {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .recipe-batch {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--amber-lt);
+    font-size: 11px;
+    color: var(--amber);
+  }
+
+  /* GROCERY */
+  .grocery-section { margin-bottom: 20px; }
+  .grocery-header {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 6px 12px;
+    background: var(--surface2);
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+  .grocery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  @media (max-width: 400px) { .grocery-grid { grid-template-columns: 1fr; } }
+  .grocery-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.12s;
+    user-select: none;
+  }
+  .grocery-item:hover { background: var(--surface2); }
+  .grocery-item.checked { opacity: 0.4; }
+  .grocery-item.checked .grocery-text { text-decoration: line-through; }
+  .grocery-cb {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .grocery-item.checked .grocery-cb { background: var(--teal); border-color: var(--teal); }
+  .grocery-cb-tick { display: none; width: 8px; height: 8px; }
+  .grocery-item.checked .grocery-cb-tick { display: block; fill: none; stroke: white; stroke-width: 2; }
+  .grocery-text { font-size: 12px; color: var(--muted); }
+
+  /* SUPPLEMENTS */
+  .supp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .supp-grid { grid-template-columns: 1fr; } }
+  .supp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+  .supp-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .supp-dose { font-size: 10px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .supp-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* RULES */
+  .rules { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .rule {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  @media (max-width: 400px) { .rule { grid-template-columns: 1fr; } }
+  .rule-key {
+    background: var(--purple-lt);
+    padding: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--purple);
+    display: flex;
+    align-items: center;
+  }
+  .rule-val { padding: 12px; font-size: 11px; color: var(--muted); line-height: 1.5; display: flex; align-items: center; }
+
+  /* PREP STEPS */
+  .prep-steps { display: flex; flex-direction: column; gap: 8px; }
+  .prep-step {
+    display: flex;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    align-items: flex-start;
+  }
+  .prep-step.highlight { background: var(--climb-lt); border-color: var(--climb); }
+  .prep-num { font-size: 12px; font-weight: 500; min-width: 18px; flex-shrink: 0; margin-top: 1px; }
+  .prep-content {}
+  .prep-title { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .prep-body { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  /* TIP BOX */
+  .tip {
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    border-left: 3px solid;
+  }
+  .tip-climb { background: var(--climb-lt); border-color: var(--climb); }
+  .tip-purple { background: var(--purple-lt); border-color: var(--purple); }
+  .tip-green { background: var(--green-lt); border-color: var(--green); }
+  .tip-amber { background: var(--amber-lt); border-color: var(--amber); }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* PAGE HEADER */
+  .page-header { margin-bottom: 28px; }
+  .page-eyebrow { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+
+  /* SNACK GRID */
+  .snack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .snack-grid { grid-template-columns: 1fr; } }
+  .snack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+  .snack-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .snack-macros { font-size: 11px; color: var(--purple); margin-bottom: 6px; }
+  .snack-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Cut Plan &#8217;25</div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('overview')">Overview</button>
+    <button class="nav-link" onclick="showPage('meal-plan')">Meal Plan</button>
+    <button class="nav-link" onclick="showPage('recipes')">Recipes</button>
+    <button class="nav-link" onclick="showPage('grocery')">Grocery</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+<div id="page-overview" class="page active">
+  <div class="page-header">
+    <div class="page-eyebrow">18 weeks · Phase 1</div>
+    <h1>Your Cut Plan</h1>
+    <p>186 lbs → ~171 lbs · Visible abs by August · ~3,000 kcal TDEE</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Start</div><div class="stat-val">189<span style="font-size:13px;color:var(--muted)"> lbs</span></div></div>
+    <div class="stat"><div class="stat-label">Start BF</div><div class="stat-val">~18<span style="font-size:13px;color:var(--muted)">%</span></div></div>
+    <div class="stat"><div class="stat-label">Target BF</div><div class="stat-val">~11<span style="font-size:13px;color:var(--muted)">%</span></div></div>
+    <div class="stat"><div class="stat-label">TDEE</div><div class="stat-val">3k<span style="font-size:13px;color:var(--muted)"> kcal</span></div></div>
+  </div>
+
+  <h2>The 3 phases</h2>
+
+  <div class="phases">
+    <div class="card card-accent-coral">
+      <div class="phase-header">
+        <span class="phase-name" style="color:var(--coral)">Phase 1 — High Deficit</span>
+        <span class="phase-weeks">Weeks 1–6</span>
+      </div>
+      <div class="phase-sub">600 kcal deficit · 2,400 kcal · 0.75–1 lb/week</div>
+      <div class="phase-body">Eat ~2,400 kcal/day. Protein 185g minimum. Carbs ~175g, fat ~65g. Weigh daily, track 7-day average.</div>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="phase-header">
+        <span class="phase-name" style="color:var(--amber)">Phase 2 — Moderate Deficit</span>
+        <span class="phase-weeks">Weeks 7–13</span>
+      </div>
+      <div class="phase-sub">400 kcal deficit · 2,600 kcal · 0.5–0.75 lb/week</div>
+      <div class="phase-body">Reduce deficit to 400 kcal. Consider a 3–5 day diet break around weeks 9–10. Carbs increase to ~210g to maintain climbing performance.</div>
+    </div>
+    <div class="card card-accent-teal">
+      <div class="phase-header">
+        <span class="phase-name" style="color:var(--teal)">Phase 3 — Dial In</span>
+        <span class="phase-weeks">Weeks 14–18</span>
+      </div>
+      <div class="phase-sub">150–200 kcal deficit · ~2,800–2,850 kcal</div>
+      <div class="phase-body">Near maintenance. Abs reveal as the final fat layer thins. Prioritise sleep (7–9 hrs). If ahead of schedule, shift to maintenance earlier.</div>
+    </div>
+  </div>
+
+  <div class="tip tip-green" style="margin-top:16px">
+    <strong>Timeline:</strong> You need to lose ~18 lbs to hit 11% BF. The revised Phase 2 deficit projects ~13–14 lbs across phases 1–2, with Phase 3 closing the rest. Abs typically show at 12–13% — you may hit the goal before August.
+  </div>
+
+  <div class="tip tip-purple">
+    <strong>On eating less than planned:</strong> If you feel full and are climbing well, your body is self-regulating. Use the weekly average as your guide — 0.5–1.5 lbs/week drop is ideal. More than 2 lbs/week consistently, eat more. Flat for 2 weeks, drop 150–200 kcal.
+  </div>
+
+  <h2>Macros by phase</h2>
+  <div class="mtable-wrap">
+    <table class="mtable">
+      <thead><tr><th>Phase</th><th>Calories</th><th class="num">Protein</th><th class="num">Carbs</th><th class="num">Fat</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1</td><td>2,400 kcal</td><td class="num">185g</td><td class="num">175g</td><td class="num">65g</td></tr>
+        <tr><td>Phase 2</td><td>2,600 kcal</td><td class="num">185g</td><td class="num">210g</td><td class="num">70g</td></tr>
+        <tr><td>Phase 3</td><td>2,850 kcal</td><td class="num">185g</td><td class="num">240g</td><td class="num">75g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Training</h2>
+  <div class="mtable-wrap">
+    <table class="mtable">
+      <thead><tr><th>Session</th><th>Frequency</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Rock climbing</td><td>3x / week</td><td>Primary burn + full-body muscle retention</td></tr>
+        <tr><td>Strength lifting</td><td>2x / week</td><td>Compound lifts — signal muscle preservation</td></tr>
+        <tr><td>Core work</td><td>2–3x / week</td><td>Planks, hollow holds, ab wheel — reveal the abs</td></tr>
+        <tr><td>Rest / walk</td><td>1–2x / week</td><td>Active recovery, keeps NEAT high</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Supplements</h2>
+  <div class="supp-grid">
+    <div class="supp-card"><div class="supp-name">Creatine monohydrate</div><div class="supp-dose">5g / day</div><div class="supp-desc">Preserves strength and muscle during a calorie deficit. Ignore the minor water weight it adds.</div></div>
+    <div class="supp-card"><div class="supp-name">Protein powder</div><div class="supp-dose">As needed</div><div class="supp-desc">Only if struggling to hit 185g from food. Whey post-climb or casein before bed.</div></div>
+    <div class="supp-card"><div class="supp-name">Caffeine / coffee</div><div class="supp-dose">Pre-session</div><div class="supp-desc">Increases fat oxidation and training performance. Time 30–45 min before climbing or lifting.</div></div>
+    <div class="supp-card"><div class="supp-name">Vitamin D + Omega-3s</div><div class="supp-dose">Daily</div><div class="supp-desc">Supports hormone function including testosterone, which tends to dip on extended cuts.</div></div>
+  </div>
+
+  <h2>The rules that matter</h2>
+  <div class="rules">
+    <div class="rule"><div class="rule-key">Track weekly averages</div><div class="rule-val">Weigh every morning, average the 7 readings. Ignore daily swings of 2–4 lbs — they are mostly water.</div></div>
+    <div class="rule"><div class="rule-key">Stall protocol</div><div class="rule-val">If weekly average doesn't drop for 2+ weeks, reduce calories by 150 kcal and reassess after 2 more weeks.</div></div>
+    <div class="rule"><div class="rule-key">Protein first</div><div class="rule-val">185g/day every day, regardless of phase. Biggest single lever for keeping muscle on a cut.</div></div>
+    <div class="rule"><div class="rule-key">Sleep is mandatory</div><div class="rule-val">7–9 hours. Poor sleep raises cortisol, tanks testosterone, increases hunger, stalls fat loss.</div></div>
+    <div class="rule"><div class="rule-key">Scale vs performance</div><div class="rule-val">If weight drops but climbing feels strong, you're fine. If strength fades at the wall, eat more.</div></div>
+    <div class="rule"><div class="rule-key">Patience in Phase 3</div><div class="rule-val">Abs appear when the final fat layer thins — don't panic and slash calories in week 16.</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MEAL PLAN ═══════════════════ -->
+<div id="page-meal-plan" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">Phase 1 · 2,400 kcal · ~185g protein</div>
+    <h1>Meal Plan</h1>
+    <p>Two dinners per week, repeated. Tuesday and Thursday are big-batch cook nights — cook 3 portions. Monday dinner feeds Tuesday lunch.</p>
+  </div>
+
+  <div class="tip tip-purple">
+    <strong>Snacks:</strong> Two per day (~45g protein, ~315 kcal combined). Snack 1 mid-morning, Snack 2 mid-afternoon. Use rice cakes + cottage cheese on climbing days (Wed/Fri) for the extra carbs. Hard-boiled eggs are batch-cooked Sunday — Snack 1 all week.
+  </div>
+
+  <h3>Snack options — all weeks</h3>
+  <div class="snack-grid">
+    <div class="snack-card"><div class="snack-name">2 hard-boiled eggs</div><div class="snack-macros">13P · 1C · 10F · 140 kcal</div><div class="snack-desc">Batch Sunday. Peel fresh each day. Snack 1 Mon–Fri.</div></div>
+    <div class="snack-card"><div class="snack-name">Cottage cheese + blueberries</div><div class="snack-macros">22P · 14C · 4F · 175 kcal</div><div class="snack-desc">150g cottage cheese + 80g blueberries. Don't pre-mix.</div></div>
+    <div class="snack-card"><div class="snack-name">Rice cakes + cottage cheese</div><div class="snack-macros">20P · 20C · 4F · 200 kcal</div><div class="snack-desc">2 rice cakes + 100g cottage cheese. Best pre-climb Snack 2.</div></div>
+    <div class="snack-card"><div class="snack-name">Protein shake</div><div class="snack-macros">25P · 5C · 2F · 130 kcal</div><div class="snack-desc">Post-climb fallback. 1 scoop + 250ml water.</div></div>
+    <div class="snack-card"><div class="snack-name">Cottage cheese + hot sauce</div><div class="snack-macros">22P · 6C · 4F · 165 kcal</div><div class="snack-desc">Zero prep. Good savoury option.</div></div>
+    <div class="snack-card"><div class="snack-name">Greek yogurt + blueberries</div><div class="snack-macros">20P · 22C · 5F · 190 kcal</div><div class="snack-desc">150g yogurt + 80g blueberries.</div></div>
+  </div>
+
+  <div class="week-tabs" style="margin-top:24px">
+    <button class="week-tab active" onclick="showWeek('a')">Week A — Asian</button>
+    <button class="week-tab" onclick="showWeek('b')">Week B — Mediterranean</button>
+    <button class="week-tab" onclick="showWeek('c')">Week C — BBQ &amp; Mexican</button>
+  </div>
+
+  <!-- WEEK A -->
+  <div id="week-a" class="week-panel active">
+    <p style="margin-bottom:16px"><strong>Dinner 1:</strong> Teriyaki chicken + rice + broccoli &nbsp;|&nbsp; <strong>Dinner 2:</strong> Beef stir-fry + noodles</p>
+    <div class="schedule-wrap">
+      <table class="schedule">
+        <thead><tr><th>Day</th><th>Morning</th><th>Snack 1</th><th>Lunch</th><th>Snack 2</th><th>Dinner</th></tr></thead>
+        <tbody>
+          <tr><td>Mon</td><td>Yogurt bowl</td><td>2 boiled eggs</td><td>Rice + egg bowl</td><td>Cott. cheese + berries</td><td class="dinner">Teriyaki chicken</td></tr>
+          <tr class="row-batch"><td>Tue <span class="badge badge-batch">×3 batch</span></td><td>Eggs + toast</td><td>2 boiled eggs</td><td>Teriyaki leftovers</td><td>Cott. cheese + berries</td><td class="dinner">Teriyaki chicken</td></tr>
+          <tr class="row-climb"><td>Wed <span class="badge badge-climb">climbing</span></td><td>Yogurt bowl</td><td>Rice cakes + CC</td><td>Teriyaki leftovers</td><td>Protein shake</td><td class="dinner">Teriyaki leftovers</td></tr>
+          <tr class="row-batch"><td>Thu <span class="badge badge-batch">×3 batch</span></td><td>Eggs + toast</td><td>2 boiled eggs</td><td>Stir-fry leftovers</td><td>Cott. cheese + berries</td><td class="dinner">Beef stir-fry</td></tr>
+          <tr class="row-climb"><td>Fri <span class="badge badge-climb">climbing</span></td><td>Yogurt bowl</td><td>Rice cakes + CC</td><td>Stir-fry leftovers</td><td>Protein shake</td><td class="dinner">Stir-fry leftovers</td></tr>
+          <tr><td>Sat</td><td>Egg fried rice</td><td>Yogurt + berries</td><td>Freestyle</td><td>Cottage cheese</td><td class="dinner">Freestyle</td></tr>
+          <tr><td>Sun</td><td>Yogurt bowl</td><td>Boiled eggs</td><td>Freestyle</td><td>Cottage cheese</td><td class="dinner">Prep / freestyle</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip tip-climb">
+      <strong>Wed + Fri:</strong> Dinner is already made from Tue/Thu batch. Rice: splash of water, microwave covered 90 sec. Snack 2 is a protein shake — no prep.
+    </div>
+    <h3>Meal macros — Week A</h3>
+    <div class="mtable-wrap">
+      <table class="mtable">
+        <thead><tr><th>Meal</th><th class="num">Kcal</th><th class="num">P</th><th class="num">C</th><th class="num">F</th><th>Swap notes</th></tr></thead>
+        <tbody>
+          <tr><td>Protein yogurt bowl</td><td class="num">350</td><td class="num">45g</td><td class="num">28g</td><td class="num">6g</td><td>Swap: skyr (+3g P). Skip granola to save 80 kcal.</td></tr>
+          <tr><td>Eggs + toast</td><td class="num">310</td><td class="num">28g</td><td class="num">22g</td><td class="num">14g</td><td>Add 2 egg whites to push to 35g protein.</td></tr>
+          <tr><td>Teriyaki chicken + rice + broccoli</td><td class="num">720</td><td class="num">55g</td><td class="num">65g</td><td class="num">18g</td><td>Swap: salmon or tofu (adjust fat ±8g).</td></tr>
+          <tr><td>Beef stir-fry + noodles</td><td class="num">700</td><td class="num">52g</td><td class="num">62g</td><td class="num">18g</td><td>Swap: chicken thigh or prawns.</td></tr>
+          <tr><td>Rice + egg bowl (Mon lunch)</td><td class="num">400</td><td class="num">24g</td><td class="num">48g</td><td class="num">10g</td><td>2 eggs over rice + soy + spring onions.</td></tr>
+          <tr><td>Snack 1: 2 boiled eggs</td><td class="num">140</td><td class="num">13g</td><td class="num">1g</td><td class="num">10g</td><td>Or: 150g cottage cheese (22g P).</td></tr>
+          <tr><td>Snack 2: cottage cheese + berries</td><td class="num">175</td><td class="num">22g</td><td class="num">14g</td><td class="num">4g</td><td>Climbing day: rice cakes + CC instead.</td></tr>
+          <tr><td><strong>Daily total</strong></td><td class="num"><strong>2,395</strong></td><td class="num"><strong>~185g</strong></td><td class="num"><strong>~178g</strong></td><td class="num"><strong>~66g</strong></td><td>Adjust rice portion to fine-tune.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Batch quantities</h3>
+    <div class="card card-accent-amber">
+      <div class="card-title">Tuesday big batch (3 portions)</div>
+      <div class="card-sub">Teriyaki chicken · covers Tue dinner + Wed dinner + Wed lunch</div>
+      750g boneless chicken thighs · 165g dry rice · 450g broccoli · 3× sauce
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Thursday big batch (3 portions)</div>
+      <div class="card-sub">Beef stir-fry · covers Thu dinner + Fri dinner + Fri lunch</div>
+      540g beef · 240g dry noodles · 450g broccoli · 3× sauce
+    </div>
+  </div>
+
+  <!-- WEEK B -->
+  <div id="week-b" class="week-panel">
+    <p style="margin-bottom:16px"><strong>Dinner 1:</strong> Shawarma chicken + couscous &nbsp;|&nbsp; <strong>Dinner 2:</strong> Lamb kofta + bulgur + hummus</p>
+    <div class="schedule-wrap">
+      <table class="schedule">
+        <thead><tr><th>Day</th><th>Morning</th><th>Snack 1</th><th>Lunch</th><th>Snack 2</th><th>Dinner</th></tr></thead>
+        <tbody>
+          <tr><td>Mon</td><td>Feta omelette</td><td>2 boiled eggs</td><td>Couscous bowl</td><td>Cott. cheese + berries</td><td class="dinner">Shawarma chicken</td></tr>
+          <tr class="row-batch"><td>Tue <span class="badge badge-batch">×3 batch</span></td><td>Yogurt bowl</td><td>2 boiled eggs</td><td>Shawarma leftovers</td><td>Cott. cheese + berries</td><td class="dinner">Shawarma chicken</td></tr>
+          <tr class="row-climb"><td>Wed <span class="badge badge-climb">climbing</span></td><td>Feta omelette</td><td>Rice cakes + CC</td><td>Shawarma leftovers</td><td>Protein shake</td><td class="dinner">Shawarma leftovers</td></tr>
+          <tr class="row-batch"><td>Thu <span class="badge badge-batch">×3 batch</span></td><td>Yogurt bowl</td><td>2 boiled eggs</td><td>Kofta leftovers</td><td>Cott. cheese + berries</td><td class="dinner">Lamb kofta</td></tr>
+          <tr class="row-climb"><td>Fri <span class="badge badge-climb">climbing</span></td><td>Feta omelette</td><td>Rice cakes + CC</td><td>Kofta leftovers</td><td>Protein shake</td><td class="dinner">Kofta leftovers</td></tr>
+          <tr><td>Sat</td><td>Shakshuka</td><td>Yogurt + berries</td><td>Freestyle</td><td>Cottage cheese</td><td class="dinner">Freestyle</td></tr>
+          <tr><td>Sun</td><td>Yogurt bowl</td><td>Boiled eggs</td><td>Freestyle</td><td>Cottage cheese</td><td class="dinner">Prep / freestyle</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip tip-climb">
+      <strong>Wed + Fri:</strong> Spiced meat improves after a day in the fridge. Couscous + bulgur reheat with a splash of water. Yogurt sauce and hummus already made — dinner in 3 min.
+    </div>
+    <h3>Meal macros — Week B</h3>
+    <div class="mtable-wrap">
+      <table class="mtable">
+        <thead><tr><th>Meal</th><th class="num">Kcal</th><th class="num">P</th><th class="num">C</th><th class="num">F</th><th>Swap notes</th></tr></thead>
+        <tbody>
+          <tr><td>Feta omelette + pita</td><td class="num">320</td><td class="num">38g</td><td class="num">22g</td><td class="num">14g</td><td>Swap: 3 whole eggs + 40g feta (same macros).</td></tr>
+          <tr><td>Protein yogurt bowl</td><td class="num">350</td><td class="num">45g</td><td class="num">28g</td><td class="num">6g</td><td>Used Tue, Thu, Sun mornings.</td></tr>
+          <tr><td>Shawarma chicken + couscous</td><td class="num">720</td><td class="num">55g</td><td class="num">60g</td><td class="num">20g</td><td>Swap: grilled chicken breast, add olive oil drizzle.</td></tr>
+          <tr><td>Lamb kofta + bulgur + hummus</td><td class="num">700</td><td class="num">52g</td><td class="num">56g</td><td class="num">24g</td><td>Swap: beef mince kofta — nearly identical macros.</td></tr>
+          <tr><td>Couscous bowl (Mon lunch)</td><td class="num">360</td><td class="num">20g</td><td class="num">48g</td><td class="num">8g</td><td>Add a boiled egg for +7g protein.</td></tr>
+          <tr><td>Snack 1: 2 boiled eggs</td><td class="num">140</td><td class="num">13g</td><td class="num">1g</td><td class="num">10g</td><td>Or: 150g cottage cheese (22g P).</td></tr>
+          <tr><td>Snack 2: cottage cheese + berries</td><td class="num">175</td><td class="num">22g</td><td class="num">14g</td><td class="num">4g</td><td>Climbing day: rice cakes + CC instead.</td></tr>
+          <tr><td><strong>Daily total</strong></td><td class="num"><strong>2,405</strong></td><td class="num"><strong>~185g</strong></td><td class="num"><strong>~172g</strong></td><td class="num"><strong>~68g</strong></td><td>Kofta days run slightly higher fat — fine.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Batch quantities</h3>
+    <div class="card card-accent-amber">
+      <div class="card-title">Tuesday big batch (3 portions)</div>
+      <div class="card-sub">Shawarma chicken · covers Tue dinner + Wed dinner + Wed lunch</div>
+      750g boneless thighs · 210g dry couscous · 3× yogurt sauce
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Thursday big batch (3 portions)</div>
+      <div class="card-sub">Lamb kofta · covers Thu dinner + Fri dinner + Fri lunch</div>
+      All patties (~600g mince total) · pre-cooked bulgur from Sunday · 3 portions hummus
+    </div>
+  </div>
+
+  <!-- WEEK C -->
+  <div id="week-c" class="week-panel">
+    <p style="margin-bottom:16px"><strong>Dinner 1:</strong> Chipotle chicken + rice + beans &nbsp;|&nbsp; <strong>Dinner 2:</strong> Slow-cooker pulled pork + rice + slaw</p>
+    <div class="schedule-wrap">
+      <table class="schedule">
+        <thead><tr><th>Day</th><th>Morning</th><th>Snack 1</th><th>Lunch</th><th>Snack 2</th><th>Dinner</th></tr></thead>
+        <tbody>
+          <tr><td>Mon</td><td>Eggs + tortilla</td><td>2 boiled eggs</td><td>Rice + beans bowl</td><td>Cott. cheese + berries</td><td class="dinner">Chipotle chicken</td></tr>
+          <tr class="row-batch"><td>Tue <span class="badge badge-batch">×3 batch</span></td><td>Yogurt bowl</td><td>2 boiled eggs</td><td>Chipotle leftovers</td><td>Cott. cheese + berries</td><td class="dinner">Chipotle chicken</td></tr>
+          <tr class="row-climb"><td>Wed <span class="badge badge-climb">climbing</span></td><td>Eggs + tortilla</td><td>Rice cakes + CC</td><td>Chipotle leftovers</td><td>Protein shake</td><td class="dinner">Chipotle leftovers</td></tr>
+          <tr class="row-batch"><td>Thu <span class="badge badge-batch">×3 batch</span></td><td>Yogurt bowl</td><td>2 boiled eggs</td><td>Pulled pork + rice</td><td>Cott. cheese + berries</td><td class="dinner">Pulled pork</td></tr>
+          <tr class="row-climb"><td>Fri <span class="badge badge-climb">climbing</span></td><td>Eggs + tortilla</td><td>Rice cakes + CC</td><td>Pulled pork leftovers</td><td>Protein shake</td><td class="dinner">Pulled pork leftovers</td></tr>
+          <tr><td>Sat</td><td>Huevos rancheros</td><td>Yogurt + berries</td><td>Freestyle</td><td>Cottage cheese</td><td class="dinner">Freestyle</td></tr>
+          <tr><td>Sun</td><td>Yogurt bowl</td><td>Boiled eggs</td><td>Freestyle</td><td>Cottage cheese</td><td class="dinner">Prep / freestyle</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip tip-climb">
+      <strong>Wed + Fri:</strong> Both meals reheat perfectly — sauce keeps meat moist. Slaw: dress fresh in 30 sec. Under 5 min fridge to eating. <strong>Wed morning: start the slow cooker before leaving for work.</strong>
+    </div>
+    <h3>Meal macros — Week C</h3>
+    <div class="mtable-wrap">
+      <table class="mtable">
+        <thead><tr><th>Meal</th><th class="num">Kcal</th><th class="num">P</th><th class="num">C</th><th class="num">F</th><th>Swap notes</th></tr></thead>
+        <tbody>
+          <tr><td>Eggs + corn tortilla</td><td class="num">380</td><td class="num">36g</td><td class="num">28g</td><td class="num">16g</td><td>Add 1 egg white to push to 39g protein.</td></tr>
+          <tr><td>Protein yogurt bowl</td><td class="num">350</td><td class="num">45g</td><td class="num">28g</td><td class="num">6g</td><td>Used Tue, Thu, Sun.</td></tr>
+          <tr><td>Chipotle chicken + rice + beans</td><td class="num">710</td><td class="num">55g</td><td class="num">60g</td><td class="num">16g</td><td>Swap: grilled skirt steak or pork tenderloin.</td></tr>
+          <tr><td>Pulled pork + rice + slaw</td><td class="num">690</td><td class="num">52g</td><td class="num">56g</td><td class="num">18g</td><td>Swap: pulled chicken thighs — same method, less fat.</td></tr>
+          <tr><td>Rice + beans bowl (Mon lunch)</td><td class="num">380</td><td class="num">18g</td><td class="num">58g</td><td class="num">6g</td><td>Add a boiled egg (+7g P) or 100g cottage cheese (+12g P).</td></tr>
+          <tr><td>Snack 1: 2 boiled eggs</td><td class="num">140</td><td class="num">13g</td><td class="num">1g</td><td class="num">10g</td><td>Or: 150g cottage cheese (22g P).</td></tr>
+          <tr><td>Snack 2: cottage cheese + berries</td><td class="num">175</td><td class="num">22g</td><td class="num">14g</td><td class="num">4g</td><td>Climbing day: rice cakes + CC instead.</td></tr>
+          <tr><td><strong>Daily total</strong></td><td class="num"><strong>2,390</strong></td><td class="num"><strong>~183g</strong></td><td class="num"><strong>~175g</strong></td><td class="num"><strong>~64g</strong></td><td>Add 1 egg white at breakfast to hit 185g.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Batch quantities</h3>
+    <div class="card card-accent-amber">
+      <div class="card-title">Tuesday big batch (3 portions)</div>
+      <div class="card-sub">Chipotle chicken · covers Tue dinner + Wed dinner + Wed lunch</div>
+      660g boneless thighs · 150g dry rice · 1.5 cans black beans
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Wednesday morning → Thursday batch</div>
+      <div class="card-sub">Pulled pork · start slow cooker Wed AM · covers Thu dinner + Fri dinner + Fri lunch</div>
+      1.2kg pork shoulder · LOW for 8 hrs · yields ~600g cooked = 3 × 200g portions
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ RECIPES ═══════════════════ -->
+<div id="page-recipes" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">All three weeks</div>
+    <h1>Recipes</h1>
+    <p>Quantities are per 1 serving. On big-batch nights cook 3 portions — amounts are listed in the batch note of each recipe.</p>
+  </div>
+
+  <h2>Snacks</h2>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Hard-boiled eggs (batch of 6)</span><span class="recipe-macros">13P · 1C · 10F · 140 kcal per 2 eggs</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients</div>
+        <div class="ing-row"><span class="ing-qty">6</span><span class="ing-name">large eggs</span></div>
+        <div class="ing-row"><span class="ing-qty">to cover</span><span class="ing-name">cold water</span></div>
+        <div class="ing-row"><span class="ing-qty">large bowl</span><span class="ing-name">ice + cold water for bath</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Place eggs in saucepan, cover with cold water by 2cm.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Bring to a rolling boil over high heat.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Reduce to gentle boil. Cook exactly 6.5 minutes.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Transfer immediately to ice bath. Leave 5 min.</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Store UNPEELED in fridge up to 5 days. Eat 2 per snack.</span></div>
+      </div>
+    </div>
+    <div class="recipe-note">Peel just before eating — unpeeled eggs last longer and peel more cleanly when cold.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Cottage cheese + blueberries</span><span class="recipe-macros">22P · 14C · 4F · 175 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients</div>
+        <div class="ing-row"><span class="ing-qty">150g</span><span class="ing-name">full-fat cottage cheese</span></div>
+        <div class="ing-row"><span class="ing-qty">80g</span><span class="ing-name">fresh blueberries</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Spoon cottage cheese into a bowl.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Add blueberries on top just before eating — do not mix ahead.</span></div>
+      </div>
+    </div>
+    <div class="recipe-note">Swap: 150g Greek yogurt + 80g blueberries = 20P / 22C / 5F.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Rice cakes + cottage cheese (pre-climb)</span><span class="recipe-macros">20P · 20C · 4F · 200 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients</div>
+        <div class="ing-row"><span class="ing-qty">2</span><span class="ing-name">plain rice cakes</span></div>
+        <div class="ing-row"><span class="ing-qty">100g</span><span class="ing-name">full-fat cottage cheese</span></div>
+        <div class="ing-row"><span class="ing-qty">pinch</span><span class="ing-name">salt + black pepper</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Top each rice cake with 50g cottage cheese.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Season. Eat immediately.</span></div>
+      </div>
+    </div>
+    <div class="recipe-note">Use as Snack 2 on Wed and Fri — extra carbs fuel the climbing session.</div>
+  </div>
+
+  <h2>Week A — Asian</h2>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Protein yogurt bowl</span><span class="recipe-macros">45P · 28C · 6F · 350 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients</div>
+        <div class="ing-row"><span class="ing-qty">200g</span><span class="ing-name">full-fat Greek yogurt</span></div>
+        <div class="ing-row"><span class="ing-qty">1 scoop</span><span class="ing-name">vanilla protein powder (~30g)</span></div>
+        <div class="ing-row"><span class="ing-qty">80g</span><span class="ing-name">blueberries</span></div>
+        <div class="ing-row"><span class="ing-qty">small handful</span><span class="ing-name">granola (optional, +80 kcal)</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Spoon yogurt into a bowl.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Stir in protein powder until fully combined — no lumps.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Top with blueberries and granola if using.</span></div>
+      </div>
+    </div>
+    <div class="recipe-note">Skip granola to save ~80 kcal on lower days.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Teriyaki chicken + rice + broccoli</span><span class="recipe-macros">55P · 65C · 18F · 720 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients (1 serving)</div>
+        <div class="ing-row"><span class="ing-qty">250g</span><span class="ing-name">boneless chicken thighs</span></div>
+        <div class="ing-row"><span class="ing-qty">55g dry</span><span class="ing-name">jasmine rice</span></div>
+        <div class="ing-row"><span class="ing-qty">150g</span><span class="ing-name">broccoli florets</span></div>
+        <div class="ing-row"><span class="ing-qty">3 tbsp</span><span class="ing-name">soy sauce</span></div>
+        <div class="ing-row"><span class="ing-qty">2 tbsp</span><span class="ing-name">mirin</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tbsp</span><span class="ing-name">honey</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp</span><span class="ing-name">sesame oil</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp</span><span class="ing-name">vegetable oil</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Mix soy, mirin, honey, sesame oil in a bowl. Set aside.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Heat oil in pan on medium-high. Thighs skin-side down.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Cook 6 min without moving. Flip, cook 4 min.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Pour sauce over. Let reduce 2 min, coating the chicken.</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Steam or boil broccoli 3–4 min. Cook rice per packet.</span></div>
+      </div>
+    </div>
+    <div class="recipe-batch">Tue batch (×3): 750g chicken · 165g dry rice · 450g broccoli · 3× sauce. Portion into 3 containers: Tue dinner / Wed dinner / Wed lunch.</div>
+    <div class="recipe-note">Reheat: splash of water on rice, microwave covered 90 sec. Chicken reheats well in a dry pan 2 min.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Beef and broccoli stir-fry + noodles</span><span class="recipe-macros">52P · 62C · 18F · 700 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients (1 serving)</div>
+        <div class="ing-row"><span class="ing-qty">180g</span><span class="ing-name">beef sirloin, thinly sliced</span></div>
+        <div class="ing-row"><span class="ing-qty">80g dry</span><span class="ing-name">egg noodles</span></div>
+        <div class="ing-row"><span class="ing-qty">150g</span><span class="ing-name">broccoli florets</span></div>
+        <div class="ing-row"><span class="ing-qty">3 tbsp</span><span class="ing-name">oyster sauce</span></div>
+        <div class="ing-row"><span class="ing-qty">2 tbsp</span><span class="ing-name">soy sauce</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tbsp</span><span class="ing-name">cornstarch in 2 tbsp cold water</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp</span><span class="ing-name">sesame oil</span></div>
+        <div class="ing-row"><span class="ing-qty">2 cloves</span><span class="ing-name">garlic, minced</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp</span><span class="ing-name">ginger, grated</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Mix oyster sauce, soy, cornstarch slurry, sesame oil. Set aside.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Cook noodles per packet. Drain, set aside.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Heat wok until smoking. Sear beef in single layer 1–2 min — do not stir. Set aside.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Add garlic + ginger, 30 sec. Broccoli, stir-fry 3 min.</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Return beef. Pour sauce. Toss 1 min until glossy. Serve over noodles.</span></div>
+      </div>
+    </div>
+    <div class="recipe-batch">Thu batch (×3): 540g beef · 240g dry noodles · 450g broccoli · 3× sauce. Portion into 3 containers: Thu dinner / Fri dinner / Fri lunch.</div>
+    <div class="recipe-note">Pan must be smoking hot to sear the beef — a lukewarm pan steams instead of browning.</div>
+  </div>
+
+  <h2>Week B — Mediterranean</h2>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Feta and egg omelette + pita</span><span class="recipe-macros">38P · 22C · 14F · 320 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients</div>
+        <div class="ing-row"><span class="ing-qty">2</span><span class="ing-name">large whole eggs</span></div>
+        <div class="ing-row"><span class="ing-qty">2</span><span class="ing-name">egg whites</span></div>
+        <div class="ing-row"><span class="ing-qty">40g</span><span class="ing-name">feta, crumbled</span></div>
+        <div class="ing-row"><span class="ing-qty">30g</span><span class="ing-name">baby spinach</span></div>
+        <div class="ing-row"><span class="ing-qty">½</span><span class="ing-name">pita bread</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp</span><span class="ing-name">olive oil</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Whisk whole eggs + egg whites. Season with pepper only — feta is salty.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Heat oil over medium. Pour in eggs.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">As edges set, add feta + spinach to one half. Fold over.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Cook 1 min more — slightly soft inside is correct.</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Warm pita in dry pan 30 sec per side or over gas flame.</span></div>
+      </div>
+    </div>
+    <div class="recipe-note">Warming pita directly on a gas flame transforms the texture.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Shawarma chicken + couscous + yogurt sauce</span><span class="recipe-macros">55P · 60C · 20F · 720 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients (1 serving)</div>
+        <div class="ing-row"><span class="ing-qty">250g</span><span class="ing-name">boneless chicken thighs</span></div>
+        <div class="ing-row"><span class="ing-qty">70g dry</span><span class="ing-name">couscous</span></div>
+        <div class="ing-row"><span class="ing-qty">100ml</span><span class="ing-name">boiling stock or water</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp each</span><span class="ing-name">cumin, smoked paprika, turmeric, coriander</span></div>
+        <div class="ing-row"><span class="ing-qty">½ tsp each</span><span class="ing-name">cinnamon, garlic powder, salt</span></div>
+        <div class="ing-row"><span class="ing-qty">150g</span><span class="ing-name">Greek yogurt (sauce)</span></div>
+        <div class="ing-row"><span class="ing-qty">½ lemon</span><span class="ing-name">juice (sauce)</span></div>
+        <div class="ing-row"><span class="ing-qty">1 small clove</span><span class="ing-name">garlic, minced (sauce)</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Mix all spices + olive oil. Coat chicken (done Sunday ideally).</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Roast 220°C for 25 min or pan-fry 6 min per side.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Couscous: pour boiling stock over, cover, 5 min, fluff.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Sauce: yogurt + lemon + garlic + pinch salt. Mix.</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Slice chicken, serve over couscous with sauce.</span></div>
+      </div>
+    </div>
+    <div class="recipe-batch">Tue batch (×3): 750g chicken · 210g dry couscous · 3× sauce. Portion into 3 containers: Tue dinner / Wed dinner / Wed lunch.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Lamb kofta + bulgur + hummus</span><span class="recipe-macros">52P · 56C · 24F · 700 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients (1 serving)</div>
+        <div class="ing-row"><span class="ing-qty">175g</span><span class="ing-name">lamb mince (3 patties ~55g each)</span></div>
+        <div class="ing-row"><span class="ing-qty">75g dry</span><span class="ing-name">bulgur wheat</span></div>
+        <div class="ing-row"><span class="ing-qty">115ml</span><span class="ing-name">boiling water</span></div>
+        <div class="ing-row"><span class="ing-qty">3 tbsp</span><span class="ing-name">hummus</span></div>
+        <div class="ing-row"><span class="ing-qty">½ cucumber + 1 tomato</span><span class="ing-name">diced, for salad</span></div>
+        <div class="ing-row"><span class="ing-qty">Sunday kofta mix:</span><span class="ing-name"></span></div>
+        <div class="ing-row"><span class="ing-qty">600g total</span><span class="ing-name">lamb mince (whole batch)</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp each</span><span class="ing-name">cumin, coriander, paprika, cinnamon</span></div>
+        <div class="ing-row"><span class="ing-qty">2 cloves</span><span class="ing-name">garlic, minced</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Sunday: combine all kofta mix. Work 2 min with hands. Shape 10–12 patties (~55g each). Refrigerate.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Bulgur: boiling water over bulgur, cover, off heat, 15 min. Fluff.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Pan-fry kofta on medium-high: 4 min per side.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Salad: cucumber + tomato + lemon + olive oil + salt.</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Serve 3 kofta over bulgur with hummus + salad.</span></div>
+      </div>
+    </div>
+    <div class="recipe-batch">Thu batch (×3): cook ALL patties at once. Pre-cooked bulgur already portioned. 3 containers: Thu dinner / Fri dinner / Fri lunch.</div>
+    <div class="recipe-note">175g raw mince = 3 patties at ~55g each. Weigh before shaping if unsure.</div>
+  </div>
+
+  <h2>Week C — BBQ &amp; Mexican</h2>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Chipotle chicken + rice + black beans</span><span class="recipe-macros">55P · 60C · 16F · 710 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients (1 serving)</div>
+        <div class="ing-row"><span class="ing-qty">220g</span><span class="ing-name">boneless chicken thighs</span></div>
+        <div class="ing-row"><span class="ing-qty">50g dry</span><span class="ing-name">long grain white rice</span></div>
+        <div class="ing-row"><span class="ing-qty">120g</span><span class="ing-name">black beans, drained</span></div>
+        <div class="ing-row"><span class="ing-qty">2</span><span class="ing-name">chipotle peppers in adobo + 1 tbsp sauce</span></div>
+        <div class="ing-row"><span class="ing-qty">juice of 1</span><span class="ing-name">lime</span></div>
+        <div class="ing-row"><span class="ing-qty">2 cloves</span><span class="ing-name">garlic</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp</span><span class="ing-name">cumin</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Sunday: blend marinade. Coat all chicken. Zip bag, fridge overnight.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Cast iron or grill on high heat: 6 min per side. Rest 3 min.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">Beans: warm with cumin, garlic powder, salt, 2 tbsp water. Mash slightly.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Cook rice per packet. Serve chicken over rice with beans.</span></div>
+      </div>
+    </div>
+    <div class="recipe-batch">Tue batch (×3): 660g chicken · 150g dry rice · 1.5 cans black beans. 3 containers: Tue dinner / Wed dinner / Wed lunch.</div>
+    <div class="recipe-note">High heat is essential — the chipotle crust is where the flavour is. Cast iron preferred.</div>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-header"><span class="recipe-title">Slow-cooker pulled pork + rice + slaw</span><span class="recipe-macros">52P · 56C · 18F · 690 kcal</span></div>
+    <div class="recipe-body">
+      <div class="recipe-ing">
+        <div class="recipe-section-label">Ingredients (whole batch)</div>
+        <div class="ing-row"><span class="ing-qty">1.2kg</span><span class="ing-name">pork shoulder</span></div>
+        <div class="ing-row"><span class="ing-qty">2 tsp</span><span class="ing-name">smoked paprika</span></div>
+        <div class="ing-row"><span class="ing-qty">1 tsp each</span><span class="ing-name">cumin, garlic powder, chilli powder, salt</span></div>
+        <div class="ing-row"><span class="ing-qty">3 tbsp</span><span class="ing-name">apple cider vinegar</span></div>
+        <div class="ing-row"><span class="ing-qty">100ml</span><span class="ing-name">water</span></div>
+        <div class="ing-row"><span class="ing-qty">Per serving:</span><span class="ing-name"></span></div>
+        <div class="ing-row"><span class="ing-qty">200g cooked</span><span class="ing-name">pulled pork</span></div>
+        <div class="ing-row"><span class="ing-qty">50g dry</span><span class="ing-name">long grain rice</span></div>
+        <div class="ing-row"><span class="ing-qty">60g dry</span><span class="ing-name">shredded cabbage + lime + mayo</span></div>
+      </div>
+      <div class="recipe-steps">
+        <div class="recipe-section-label">Steps</div>
+        <div class="step-row"><span class="step-num">1</span><span class="step-text">Sunday: rub pork with all spices. Into slow cooker insert, refrigerate.</span></div>
+        <div class="step-row"><span class="step-num">2</span><span class="step-text">Wed morning: add vinegar + water. Set LOW. Leave for work.</span></div>
+        <div class="step-row"><span class="step-num">3</span><span class="step-text">8 hours: shred with two forks. Mix juices back in.</span></div>
+        <div class="step-row"><span class="step-num">4</span><span class="step-text">Portion into 3 × 200g containers (Thu dinner / Fri dinner / Fri lunch).</span></div>
+        <div class="step-row"><span class="step-num">5</span><span class="step-text">Per serving: cook rice. Dress dry cabbage fresh with lime + salt + small spoon mayo.</span></div>
+      </div>
+    </div>
+    <div class="recipe-note">1.2kg raw yields ~600g cooked = 3 × 200g portions. Dress slaw fresh per portion — do not store dressed.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ GROCERY ═══════════════════ -->
+<div id="page-grocery" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">Tap items to check off</div>
+    <h1>Grocery Lists</h1>
+    <p>Quantities sized for one person, one week. Pantry items last 6–8 weeks.</p>
+  </div>
+
+  <div class="week-tabs">
+    <button class="week-tab active" onclick="showGrocery('ga')">Week A — Asian</button>
+    <button class="week-tab" onclick="showGrocery('gb')">Week B — Mediterranean</button>
+    <button class="week-tab" onclick="showGrocery('gc')">Week C — BBQ &amp; Mexican</button>
+  </div>
+
+  <div id="week-ga" class="week-panel active">
+    <p style="margin-bottom:16px">Est. ~$80–90 &nbsp;|&nbsp; Pantry items last 6–8 weeks</p>
+    <div class="grocery-section">
+      <div class="grocery-header">Proteins (~$40)</div>
+      <div class="grocery-grid" id="ga-proteins"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Carbs (~$10)</div>
+      <div class="grocery-grid" id="ga-carbs"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Vegetables (~$12)</div>
+      <div class="grocery-grid" id="ga-veg"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Pantry (lasts many weeks)</div>
+      <div class="grocery-grid" id="ga-pantry"></div>
+    </div>
+  </div>
+
+  <div id="week-gb" class="week-panel">
+    <p style="margin-bottom:16px">Est. ~$82–92 &nbsp;|&nbsp; Swap lamb for beef mince to bring under $80</p>
+    <div class="grocery-section">
+      <div class="grocery-header">Proteins (~$44)</div>
+      <div class="grocery-grid" id="gb-proteins"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Carbs (~$12)</div>
+      <div class="grocery-grid" id="gb-carbs"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Vegetables (~$12)</div>
+      <div class="grocery-grid" id="gb-veg"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Pantry (lasts many weeks)</div>
+      <div class="grocery-grid" id="gb-pantry"></div>
+    </div>
+  </div>
+
+  <div id="week-gc" class="week-panel">
+    <p style="margin-bottom:16px">Est. ~$80–90 &nbsp;|&nbsp; Pork shoulder = best value protein on the plan</p>
+    <div class="grocery-section">
+      <div class="grocery-header">Proteins (~$38)</div>
+      <div class="grocery-grid" id="gc-proteins"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Carbs (~$10)</div>
+      <div class="grocery-grid" id="gc-carbs"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Fresh &amp; veg (~$12)</div>
+      <div class="grocery-grid" id="gc-veg"></div>
+    </div>
+    <div class="grocery-section">
+      <div class="grocery-header">Pantry (lasts many weeks)</div>
+      <div class="grocery-grid" id="gc-pantry"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Navigation ───────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showWeek(id) {
+  const btn = event.target;
+  const parent = btn.closest('.page, .week-panel')?.parentElement || document.body;
+  btn.closest('.week-tabs').querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  // Find sibling panels
+  const tabs = btn.closest('.week-tabs');
+  const container = tabs.parentElement;
+  container.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('week-' + id).classList.add('active');
+}
+
+function showGrocery(id) {
+  const btn = event.target;
+  btn.closest('.week-tabs').querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#page-grocery .week-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('week-' + id).classList.add('active');
+}
+
+// ── Grocery checklist ────────────────────────────────
+const groceryData = {
+  'ga-proteins': ['Chicken thighs, boneless — 1kg','Beef sirloin or chuck — 600g','Eggs — 18 count','Greek yogurt, full-fat — 2× 500g','Cottage cheese — 2× 500g','Protein powder — check supply'],
+  'ga-carbs':    ['Jasmine rice — 1kg','Egg noodles — 400g','Sourdough — 1 loaf','Rice cakes — 1 pack','Blueberries — 2× 125g punnet'],
+  'ga-veg':      ['Broccoli — 1.2kg total','Frozen stir-fry veg mix — 500g','Garlic — 1 bulb','Ginger, fresh — large knob','Spring onions — 1 bunch'],
+  'ga-pantry':   ['Soy sauce','Oyster sauce','Mirin','Sesame oil','Cornstarch','Honey'],
+
+  'gb-proteins': ['Chicken thighs, boneless — 1kg','Lamb mince — 600g','Eggs — 18 count','Greek yogurt, full-fat — 2× 500g','Feta cheese — 200g','Cottage cheese — 2× 500g'],
+  'gb-carbs':    ['Couscous — 500g','Bulgur wheat — 400g','Pita breads — pack of 8','Rice cakes — 1 pack','Lemon — 5','Blueberries — 2× 125g punnet'],
+  'gb-veg':      ['Baby spinach — 200g','Cherry tomatoes — 250g','Cucumber — 3','Red onion — 2','Garlic — 1 bulb','Fresh parsley — 1 bunch'],
+  'gb-pantry':   ['Olive oil','Hummus — large tub','Cumin, coriander, smoked paprika','Turmeric, cinnamon, garlic powder','Protein powder — check supply'],
+
+  'gc-proteins': ['Chicken thighs, boneless — 880g','Pork shoulder — 1.2kg','Eggs — 18 count','Greek yogurt, full-fat — 2× 500g','Cottage cheese — 2× 500g','Protein powder — check supply'],
+  'gc-carbs':    ['Long grain white rice — 1kg','Black beans, canned — 3× 400g','Corn tortillas — pack of 12','Cabbage, half head','Rice cakes — 1 pack','Blueberries — 2× 125g punnet'],
+  'gc-veg':      ['Limes — 6','Garlic — 1 bulb','White onion — 2','Fresh cilantro — 1 bunch','Jalapenos — 2','Avocados — 2 (weekend)'],
+  'gc-pantry':   ['Chipotle in adobo — 1 small can','Smoked paprika, cumin, garlic powder','Chilli powder','Apple cider vinegar','Hot sauce','Mayo — small jar'],
+};
+
+function buildGrocery() {
+  const saved = JSON.parse(localStorage.getItem('grocery-checked') || '{}');
+  Object.entries(groceryData).forEach(([id, items]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    items.forEach((item, i) => {
+      const key = id + '-' + i;
+      const checked = saved[key] || false;
+      const div = document.createElement('div');
+      div.className = 'grocery-item' + (checked ? ' checked' : '');
+      div.innerHTML = `<div class="grocery-cb"><svg class="grocery-cb-tick" viewBox="0 0 8 8"><polyline points="1,4 3,6 7,2"/></svg></div><span class="grocery-text">${item}</span>`;
+      div.onclick = () => {
+        div.classList.toggle('checked');
+        const s = JSON.parse(localStorage.getItem('grocery-checked') || '{}');
+        s[key] = div.classList.contains('checked');
+        localStorage.setItem('grocery-checked', JSON.stringify(s));
+      };
+      el.appendChild(div);
+    });
+  });
+}
+
+buildGrocery();
+</script>
+</body>
+</html>
