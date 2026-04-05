@@ -441,7 +441,32 @@
   .page-header { margin-bottom: 28px; }
   .page-eyebrow { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
 
-  /* SNACK GRID */
+  /* RESET BTN */
+  .reset-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-left: auto;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .reset-btn:hover { color: var(--coral); border-color: var(--coral); }
+
+  /* GROCERY WEEK HEADER */
+  .grocery-week-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .snack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   @media (max-width: 480px) { .snack-grid { grid-template-columns: 1fr; } }
   .snack-card {
@@ -464,6 +489,7 @@
     <button class="nav-link" onclick="showPage('meal-plan')">Meal Plan</button>
     <button class="nav-link" onclick="showPage('recipes')">Recipes</button>
     <button class="nav-link" onclick="showPage('grocery')">Grocery</button>
+    <button class="nav-link" onclick="showPage('prep')">Sunday Prep</button>
   </div>
 </nav>
 
@@ -1032,7 +1058,10 @@
   </div>
 
   <div id="week-ga" class="week-panel active">
-    <p style="margin-bottom:16px">Est. ~$80–90 &nbsp;|&nbsp; Pantry items last 6–8 weeks</p>
+    <div class="grocery-week-header">
+      <p>Est. ~$80–90 &nbsp;|&nbsp; Pantry items last 6–8 weeks</p>
+      <button class="reset-btn" onclick="resetGrocery('ga')">Reset list</button>
+    </div>
     <div class="grocery-section">
       <div class="grocery-header">Proteins (~$40)</div>
       <div class="grocery-grid" id="ga-proteins"></div>
@@ -1052,7 +1081,10 @@
   </div>
 
   <div id="week-gb" class="week-panel">
-    <p style="margin-bottom:16px">Est. ~$82–92 &nbsp;|&nbsp; Swap lamb for beef mince to bring under $80</p>
+    <div class="grocery-week-header">
+      <p>Est. ~$82–92 &nbsp;|&nbsp; Swap lamb for beef mince to bring under $80</p>
+      <button class="reset-btn" onclick="resetGrocery('gb')">Reset list</button>
+    </div>
     <div class="grocery-section">
       <div class="grocery-header">Proteins (~$44)</div>
       <div class="grocery-grid" id="gb-proteins"></div>
@@ -1072,7 +1104,10 @@
   </div>
 
   <div id="week-gc" class="week-panel">
-    <p style="margin-bottom:16px">Est. ~$80–90 &nbsp;|&nbsp; Pork shoulder = best value protein on the plan</p>
+    <div class="grocery-week-header">
+      <p>Est. ~$80–90 &nbsp;|&nbsp; Pork shoulder = best value protein on the plan</p>
+      <button class="reset-btn" onclick="resetGrocery('gc')">Reset list</button>
+    </div>
     <div class="grocery-section">
       <div class="grocery-header">Proteins (~$38)</div>
       <div class="grocery-grid" id="gc-proteins"></div>
@@ -1088,6 +1123,206 @@
     <div class="grocery-section">
       <div class="grocery-header">Pantry (lasts many weeks)</div>
       <div class="grocery-grid" id="gc-pantry"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SUNDAY PREP ═══════════════════ -->
+<div id="page-prep" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">30–45 min active time</div>
+    <h1>Sunday Prep</h1>
+    <p>Do this every Sunday to set up the whole week. Steps are in the order you should do them — some things can sit in the fridge while you do others.</p>
+  </div>
+
+  <div class="tip tip-amber">
+    <strong>Big-batch reminder:</strong> Sunday prep does NOT include cooking the main dinners. Those are cooked fresh on Monday (1 portion) and Tuesday + Thursday (3 portions each). Sunday is just marinade, boiled eggs, snack portions, and any grains that keep well.
+  </div>
+
+  <div class="week-tabs">
+    <button class="week-tab active" onclick="showPrep('pa')">Week A — Asian</button>
+    <button class="week-tab" onclick="showPrep('pb')">Week B — Mediterranean</button>
+    <button class="week-tab" onclick="showPrep('pc')">Week C — BBQ &amp; Mexican</button>
+  </div>
+
+  <!-- PREP A -->
+  <div id="week-pa" class="week-panel active">
+    <div class="tip tip-climb" style="margin-bottom:20px">
+      <strong>Week A timing:</strong> Everything here takes about 35 min. Rice and eggs can run simultaneously. Marinating takes 2 min of hands-on time then just sits in the fridge.
+    </div>
+    <div class="prep-steps">
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--teal)">1</div>
+        <div class="prep-content">
+          <div class="prep-title">Cook a small pot of rice (Mon portion only)</div>
+          <div class="prep-body">Rinse 55g dry jasmine rice, cook with 85ml water. Spread on a tray to cool — cold rice reheats better. Store in one container. Tuesday and Thursday batch rice is cooked fresh on those nights.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--teal)">2</div>
+        <div class="prep-content">
+          <div class="prep-title">Marinate all chicken thighs</div>
+          <div class="prep-body">Whisk: 4 tbsp soy sauce, 3 tbsp mirin, 1.5 tbsp honey, 1 tsp sesame oil, 3 minced garlic cloves. Pour over all 1kg chicken in a zip bag. Seal, shake to coat, refrigerate. Monday: cook 250g. Tuesday: cook remaining 750g as the big batch (3 portions).</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--teal)">3</div>
+        <div class="prep-content">
+          <div class="prep-title">Slice and store beef</div>
+          <div class="prep-body">Slice 600g beef thinly against the grain — easier when the beef is cold and firm. Store in a container with a light coating of soy sauce and sesame oil. Cook all Thursday as the big batch (3 portions).</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--teal)">4</div>
+        <div class="prep-content">
+          <div class="prep-title">Hard-boil 6 eggs</div>
+          <div class="prep-body">Rolling boil, lower eggs gently, cook exactly 6.5 minutes. Transfer immediately to ice bath for 5 min. Store UNPEELED in the fridge — they keep 5 days and peel more cleanly cold. These are Snack 1 Mon–Fri (2 eggs per day).</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--teal)">5</div>
+        <div class="prep-content">
+          <div class="prep-title">Blanch broccoli</div>
+          <div class="prep-body">Cut into florets. Boil 2 min, drain immediately, run under cold water to stop cooking. Store in a container. Reheat by tossing in a hot pan for 1 min each night — much quicker than cooking from raw.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--teal)">6</div>
+        <div class="prep-content">
+          <div class="prep-title">Portion cottage cheese snacks</div>
+          <div class="prep-body">Divide 2 tubs of cottage cheese into 5 containers of ~150g each. These are Snack 2 Mon–Fri. Do not add blueberries yet — add them fresh when eating or they go soft.</div>
+        </div>
+      </div>
+      <div class="prep-step highlight">
+        <div class="prep-num" style="color:var(--climb)">7</div>
+        <div class="prep-content">
+          <div class="prep-title">Tuesday + Thursday big-batch reminder</div>
+          <div class="prep-body">Tuesday evening: cook 750g chicken + 165g dry rice + 450g broccoli (3× sauce). Portion into 3 containers: Tue dinner / Wed dinner / Wed lunch. Thursday evening: cook 540g beef + 240g dry noodles + 450g broccoli (3× sauce). Portion into 3 containers: Thu dinner / Fri dinner / Fri lunch.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREP B -->
+  <div id="week-pb" class="week-panel">
+    <div class="tip tip-climb" style="margin-bottom:20px">
+      <strong>Week B timing:</strong> About 35 min. Shape kofta first so they can chill while you do everything else. Bulgur cooks itself once you pour the water.
+    </div>
+    <div class="prep-steps">
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--amber)">1</div>
+        <div class="prep-content">
+          <div class="prep-title">Mix and shape all kofta patties</div>
+          <div class="prep-body">Combine 600g lamb mince with 1 tsp each cumin, coriander, smoked paprika, cinnamon + 2 minced garlic cloves + salt, pepper + small handful chopped parsley. Mix thoroughly with your hands for 2 min — the more you work it, the better they hold together on the pan. Shape into 10–12 oval patties (~55g each). Cover, refrigerate. Cook ALL of them Thursday.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--amber)">2</div>
+        <div class="prep-content">
+          <div class="prep-title">Marinate all chicken thighs</div>
+          <div class="prep-body">Mix all shawarma spices (1 tsp each cumin, smoked paprika, turmeric, coriander; ½ tsp cinnamon, garlic powder, salt) with a glug of olive oil and juice of 1 lemon. Coat all 1kg chicken thoroughly. Zip bag, refrigerate. Monday: cook 250g. Tuesday: cook remaining 750g as the big batch (3 portions).</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--amber)">3</div>
+        <div class="prep-content">
+          <div class="prep-title">Make yogurt sauce</div>
+          <div class="prep-body">300g Greek yogurt + 1 small garlic clove minced + juice of half a lemon + salt + pinch of cumin. Stir and store in a jar. Keeps 5 days. Used as sauce for both the chicken and the kofta, and as a snack dip if needed.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--amber)">4</div>
+        <div class="prep-content">
+          <div class="prep-title">Cook bulgur for the whole week</div>
+          <div class="prep-body">Bring 340ml water to a boil. Add 225g bulgur wheat + 1 tsp salt. Cover, remove from heat, rest 15 min. Fluff with a fork, cool, portion into 3 containers. These cover Thursday dinner, Friday dinner, and Friday lunch — already done.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--amber)">5</div>
+        <div class="prep-content">
+          <div class="prep-title">Hard-boil 6 eggs</div>
+          <div class="prep-body">Rolling boil, 6.5 min exactly, ice bath 5 min. Store unpeeled in the fridge. Snack 1 Mon–Fri — peel just before eating.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--amber)">6</div>
+        <div class="prep-content">
+          <div class="prep-title">Portion cottage cheese snacks</div>
+          <div class="prep-body">Divide 2 tubs into 5 × ~150g containers. Add blueberries fresh when eating — do not pre-mix.</div>
+        </div>
+      </div>
+      <div class="prep-step highlight">
+        <div class="prep-num" style="color:var(--climb)">7</div>
+        <div class="prep-content">
+          <div class="prep-title">Tuesday + Thursday big-batch reminder</div>
+          <div class="prep-body">Tuesday evening: cook 750g chicken + 210g dry couscous (3× yogurt sauce already made). Portion into 3 containers: Tue dinner / Wed dinner / Wed lunch. Thursday evening: cook ALL kofta patties + reheat pre-cooked bulgur. Portion into 3 containers: Thu dinner / Fri dinner / Fri lunch. Kofta improves overnight — Fri dinner tastes better than Thu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREP C -->
+  <div id="week-pc" class="week-panel">
+    <div class="tip tip-climb" style="margin-bottom:20px">
+      <strong>Week C timing:</strong> ~40 min hands-on. Rub the pork first so it can go in the fridge. The slow cooker doesn't start Sunday — you start it Wednesday morning before work. It cooks while you climb.
+    </div>
+    <div class="prep-steps">
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">1</div>
+        <div class="prep-content">
+          <div class="prep-title">Rub the pork shoulder</div>
+          <div class="prep-body">Mix: 2 tsp smoked paprika + 1 tsp each cumin, garlic powder, chilli powder + 1 tsp salt. Coat pork shoulder all over with the dry rub. Place in the slow cooker insert, cover, refrigerate overnight. Wednesday morning before work: add 100ml water + 3 tbsp apple cider vinegar, set to LOW, leave for 8 hours. Done when you get home from climbing.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">2</div>
+        <div class="prep-content">
+          <div class="prep-title">Make chipotle marinade and coat chicken</div>
+          <div class="prep-body">Blend: 2 chipotle peppers in adobo + 1 tbsp adobo sauce + juice of 2 limes + 3 garlic cloves + 1 tsp cumin + salt. Pour over all 880g chicken in a zip bag. Seal, refrigerate overnight minimum. Monday: cook 220g. Tuesday: cook remaining 660g as the big batch (3 portions).</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">3</div>
+        <div class="prep-content">
+          <div class="prep-title">Cook rice (Monday portion only)</div>
+          <div class="prep-body">Cook 100g dry rice. Cool and store in one container for Monday. Tuesday and Thursday batch rice is cooked fresh on those nights alongside the main protein.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">4</div>
+        <div class="prep-content">
+          <div class="prep-title">Season and portion black beans</div>
+          <div class="prep-body">Drain 2 cans black beans. Warm in a pan with 1 tsp cumin, ½ tsp garlic powder, salt, 2 tbsp water. Mash slightly so some are broken — better texture. Cool, portion into 4 containers. Used Mon–Thu across lunches and dinners.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">5</div>
+        <div class="prep-content">
+          <div class="prep-title">Shred cabbage for slaw</div>
+          <div class="prep-body">Finely shred half a head of cabbage. Store DRY in a container. Do NOT dress ahead — dress each individual portion fresh with lime juice + salt + small spoon of mayo when serving. Dressed cabbage goes soggy within hours; dry cabbage lasts 4 days.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">6</div>
+        <div class="prep-content">
+          <div class="prep-title">Hard-boil 6 eggs</div>
+          <div class="prep-body">Rolling boil, 6.5 min exactly, ice bath 5 min. Store unpeeled. Snack 1 Mon–Fri.</div>
+        </div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-num" style="color:var(--coral)">7</div>
+        <div class="prep-content">
+          <div class="prep-title">Portion cottage cheese snacks</div>
+          <div class="prep-body">Divide 2 tubs into 5 × ~150g containers. Add blueberries fresh when eating.</div>
+        </div>
+      </div>
+      <div class="prep-step highlight">
+        <div class="prep-num" style="color:var(--climb)">8</div>
+        <div class="prep-content">
+          <div class="prep-title">Wednesday morning + Tuesday big-batch reminder</div>
+          <div class="prep-body">Wednesday morning before leaving: pork in slow cooker, LOW, 8 hrs. Pulled pork portions Thu dinner / Fri dinner / Fri lunch — done automatically. Tuesday evening: grill 660g chipotle chicken + 150g dry rice + 1.5 cans beans. Portion into 3 containers: Tue dinner / Wed dinner / Wed lunch.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1161,6 +1396,22 @@ function buildGrocery() {
       el.appendChild(div);
     });
   });
+}
+
+function showPrep(id) {
+  const btn = event.target;
+  btn.closest('.week-tabs').querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#page-prep .week-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('week-p' + id.slice(-1)).classList.add('active');
+}
+
+function resetGrocery(week) {
+  const saved = JSON.parse(localStorage.getItem('grocery-checked') || '{}');
+  const prefix = week + '-';
+  Object.keys(saved).forEach(k => { if (k.startsWith(prefix)) delete saved[k]; });
+  localStorage.setItem('grocery-checked', JSON.stringify(saved));
+  buildGrocery();
 }
 
 buildGrocery();
