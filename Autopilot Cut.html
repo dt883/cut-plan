@@ -1,0 +1,459 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Autopilot Cut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F4F1; --surface:#FFFFFF; --surface2:#E9EBE6; --ink:#1B211E; --muted:#58635D;
+  --line:rgba(27,33,30,.13); --accent:#2F55C8; --accent-soft:rgba(47,85,200,.09);
+  --climb:#9A6410; --climb-soft:rgba(215,160,40,.16); --ok:#2E7D4F;
+  --display:'Archivo','Arial Narrow',system-ui,sans-serif;
+  --body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121614; --surface:#1A1F1C; --surface2:#242A26; --ink:#E4E8E5; --muted:#9AA59F;
+    --line:rgba(228,232,229,.13); --accent:#8FA8F3; --accent-soft:rgba(143,168,243,.13);
+    --climb:#E3B558; --climb-soft:rgba(227,181,88,.13); --ok:#6CC08F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121614; --surface:#1A1F1C; --surface2:#242A26; --ink:#E4E8E5; --muted:#9AA59F;
+  --line:rgba(228,232,229,.13); --accent:#8FA8F3; --accent-soft:rgba(143,168,243,.13);
+  --climb:#E3B558; --climb-soft:rgba(227,181,88,.13); --ok:#6CC08F;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:0 64px}
+
+header.top{padding-block:36px 20px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-stretch:115%;font-weight:800;font-size:clamp(34px,7vw,52px);line-height:1;letter-spacing:-.01em;margin:10px 0 12px;text-wrap:balance}
+.lede{color:var(--muted);max-width:60ch;margin:0}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:10px;margin-bottom:28px}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:var(--display);font-stretch:95%;font-weight:600;font-size:14px;color:var(--muted);background:none;border:1px solid transparent;border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);background:var(--surface);border-color:var(--line)}
+.tab:focus-visible,.chip:focus-visible,.check:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+section.panel{display:flex;flex-direction:column;gap:22px}
+h2{font-family:var(--display);font-stretch:108%;font-weight:750;font-size:26px;line-height:1.15;margin:8px 0 0;text-wrap:balance}
+h3{font-family:var(--display);font-stretch:100%;font-weight:700;font-size:17px;margin:0}
+p{margin:0;max-width:65ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:13px}
+
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+@media (max-width:560px){.strip{grid-template-columns:repeat(2,1fr)}}
+.strip div{background:var(--surface);padding:14px 14px 12px}
+.strip .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.strip .v{font-family:var(--display);font-stretch:110%;font-weight:750;font-size:24px;font-variant-numeric:tabular-nums;margin-top:2px}
+.strip .v small{font-size:13px;font-weight:500;color:var(--muted);font-stretch:100%}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.box > * + *{margin-top:10px}
+ul.clean{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ul.clean li{display:grid;grid-template-columns:18px 1fr;gap:10px}
+ul.clean li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:8px;margin-left:4px}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box h3{font-size:14px;font-family:var(--mono);font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.cmp .box.new h3{color:var(--accent)}
+.cmp .box ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+
+/* Day types */
+.days{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.days{grid-template-columns:1fr}}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px;display:flex;flex-direction:column;gap:10px}
+.day.climb{background:linear-gradient(var(--climb-soft),var(--climb-soft)),var(--surface)}
+.day-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:var(--surface2);color:var(--muted)}
+.day.climb .pill{background:var(--climb-soft);color:var(--climb)}
+.slot{display:grid;grid-template-columns:64px 1fr;gap:10px;padding-block:7px;border-top:1px solid var(--line);font-size:15px}
+.slot .t{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:2px;font-variant-numeric:tabular-nums}
+.slot .t.c{color:var(--climb);font-weight:600}
+.slot small{display:block;color:var(--muted);font-size:13px}
+
+/* bowl diagram */
+.bowl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:560px){.bowl{grid-template-columns:repeat(2,1fr)}}
+.bowl div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.bowl .n{font-family:var(--display);font-stretch:110%;font-weight:750;font-size:18px}
+.bowl .a{font-family:var(--mono);font-size:12px;color:var(--accent);margin-top:2px}
+.bowl p{font-size:14px;color:var(--muted);margin-top:6px}
+
+/* steps */
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:12px;padding-block:14px;border-top:1px solid var(--line)}
+ol.steps li:first-child{border-top:none}
+ol.steps li::before{content:counter(s);font-family:var(--display);font-stretch:120%;font-weight:800;font-size:22px;color:var(--accent);line-height:1.2}
+ol.steps b{display:block;margin-bottom:2px}
+ol.steps .clock{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* flavor chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--body);font-size:14px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:700}
+.chip .now{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-left:6px;opacity:.85}
+.flavor-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+@media (max-width:560px){.flavor-grid{grid-template-columns:1fr}}
+.flavor-grid div{background:var(--surface);padding:14px 16px}
+.flavor-grid .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.extras{grid-template-columns:1fr}}
+.extras .box{padding:14px}
+.extras .box p{font-size:14px;color:var(--muted)}
+
+/* groceries */
+.g-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.g-group{display:flex;flex-direction:column;gap:6px}
+.g-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding-bottom:4px;border-bottom:1px solid var(--line)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px}
+@media (max-width:560px){.checks{grid-template-columns:1fr}}
+.check{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;text-align:left;background:none;border:none;color:var(--ink);font:inherit;font-size:15px;padding:7px 4px;border-radius:6px;cursor:pointer}
+.check:hover{background:var(--surface2)}
+.check .bx{width:18px;height:18px;border:1.5px solid var(--muted);border-radius:4px;margin-top:2px;display:grid;place-items:center}
+.check svg{width:12px;height:12px;stroke:var(--bg);stroke-width:3;fill:none;visibility:hidden}
+.check[aria-checked="true"]{color:var(--muted);text-decoration:line-through}
+.check[aria-checked="true"] .bx{background:var(--ok);border-color:var(--ok)}
+.check[aria-checked="true"] svg{visibility:visible}
+.check .q{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none}
+.btn{font-family:var(--mono);font-size:12px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:7px 12px;cursor:pointer}
+.btn:hover{color:var(--ink);border-color:var(--muted)}
+
+/* rules */
+.rules{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.rule{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);background:var(--surface)}
+.rule + .rule{border-top:1px solid var(--line)}
+.rule .if{padding:14px 16px;font-weight:700;background:var(--accent-soft)}
+.rule .then{padding:14px 16px;color:var(--muted)}
+@media (max-width:520px){.rule{grid-template-columns:1fr}.rule .if{padding-bottom:6px}.rule .then{padding-top:6px}}
+
+.note{border-left:3px solid var(--accent);padding:4px 0 4px 14px;color:var(--muted)}
+.note.climb{border-color:var(--climb)}
+.note strong{color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.tab,.chip,.check{transition:background .15s,color .15s,border-color .15s}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Plan v2 · starts Sun Oct 4, 2026 · no end date</div>
+    <h1>Autopilot Cut</h1>
+    <p class="lede">One cook on Sunday. The same breakfast every day. Four kinds of day, rotating flavors so the food doesn't get old, and nothing to log.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Plan sections">
+    <button class="tab" role="tab" id="t-plan" data-tab="plan">The plan</button>
+    <button class="tab" role="tab" id="t-days" data-tab="days">Your days</button>
+    <button class="tab" role="tab" id="t-cook" data-tab="cook">Sunday cook</button>
+    <button class="tab" role="tab" id="t-flavors" data-tab="flavors">Flavors</button>
+    <button class="tab" role="tab" id="t-groceries" data-tab="groceries">Groceries</button>
+    <button class="tab" role="tab" id="t-checkins" data-tab="checkins">Check-ins</button>
+  </nav>
+
+  <!-- PLAN -->
+  <section class="panel" id="plan" role="tabpanel" aria-labelledby="t-plan">
+    <div class="strip">
+      <div><div class="k">Starting point</div><div class="v">193.6 <small>lb</small></div></div>
+      <div><div class="k">Target pace</div><div class="v">~0.5 <small>lb / week</small></div></div>
+      <div><div class="k">Cooking</div><div class="v">1× <small>/ week</small></div></div>
+      <div><div class="k">Protein</div><div class="v">~175 <small>g / day</small></div></div>
+    </div>
+
+    <h2>What went wrong last time</h2>
+    <p class="muted">From April to June your weight held at 186–188 lb. The plan wasn't producing a deficit in practice. Its weekday menus were aggressive (1,600–1,900 kcal), weekends made up the gap, and running three cuisines with Sunday prep plus three cook nights was a lot to keep up while running a household on your own. From July, weigh-ins dropped from ~25 a month to 3, and weight went up 6 lb.</p>
+    <p class="muted">The protein habit worked, and your strength shows it. That part stays.</p>
+
+    <div class="cmp">
+      <div class="box">
+        <h3>Old plan</h3>
+        <ul>
+          <li>3 rotating cuisines, each with its own recipes</li>
+          <li>Sunday prep + cook nights Mon, Tue, Thu</li>
+          <li>Gram-level quantities for everything</li>
+          <li>Big deficit, 18-week deadline</li>
+        </ul>
+      </div>
+      <div class="box new">
+        <h3>This plan</h3>
+        <ul>
+          <li>One cooking method; only the seasoning and sauces change</li>
+          <li>One ~50 min cook on Sunday, no weeknight cooking</li>
+          <li>Portions set by the plan, not by counting</li>
+          <li>Small deficit, no deadline</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>How it works</h2>
+    <ul class="clean">
+      <li><span><strong>Weekdays run on defaults.</strong> Breakfast, snack, lunch and dinner are the same shape every day, so you never decide what to eat Monday–Friday.</span></li>
+      <li><span><strong>The deficit comes from the defaults.</strong> A default weekday lands around 2,100 kcal, a climb day around 2,350, and weekends run looser. That averages near 2,300, roughly 400–500 under what you likely burn. In practice that shows up as about 0.5 lb/week.</span></li>
+      <li><span><strong>Boredom is handled by sauce, not by recipes.</strong> Chicken and ground meat get cooked the same way every week. A 4-week flavor rotation changes the seasoning and the two sauces.</span></li>
+      <li><span><strong>Weekends are yours, with two rules.</strong> Keep breakfast, and put protein in every meal.</span></li>
+      <li><span><strong>Adjust monthly, not daily.</strong> A cheap scale jumps around, so you look at the month, a tape measure and a photo.</span></li>
+    </ul>
+
+    <p class="note"><strong>Expectation:</strong> at 0.5 lb/week, visible abs probably take 6–9 months. There's no deadline, so a slow month isn't a failure. The only thing that counts is still running this in March.</p>
+  </section>
+
+  <!-- DAYS -->
+  <section class="panel" id="days" role="tabpanel" aria-labelledby="t-days" hidden>
+    <h2>There are four kinds of day</h2>
+    <p class="muted">Every bowl is built the same way. Lunch is chicken, dinner is ground meat.</p>
+
+    <div class="bowl" aria-label="How to build a bowl">
+      <div><div class="n">Meat</div><div class="a">190 g · 170 g cooked</div><p>190 g chicken at lunch, 170 g ground meat at dinner. About 45 g protein.</p></div>
+      <div><div class="n">Rice</div><div class="a">175 g cooked</div><p>260 g on climb nights.</p></div>
+      <div><div class="n">Frozen veg</div><div class="a">150 g +</div><p>Straight from the bag. More is fine.</p></div>
+      <div><div class="n">Sauce</div><div class="a">30 g</div><p>Sauce A at lunch, B at dinner.</p></div>
+    </div>
+    <p class="muted" style="font-size:15px">Build it in one bowl on the scale, taring between each part: rice, meat, frozen veg, then sauce after microwaving. Cover, microwave 3–4 min, stir. One bowl and one fork to wash. The meat and rice numbers are typical; Sunday's weigh-in gives you this week's exact ones.</p>
+
+    <div class="days">
+      <div class="day">
+        <div class="day-head"><h3>Default weekday</h3><span class="pill">Mon · Tue · Thu</span></div>
+        <div class="slot"><span class="t">7:30</span><span>David bar + a piece of fruit<small>Or the yogurt bowl: 225 g Greek yogurt + 15 g protein powder stirred in, 75 g berries, 35 g granola</small></span></div>
+        <div class="slot"><span class="t">12:00</span><span>Lunch bowl<small>Chicken + rice + veg + sauce A</small></span></div>
+        <div class="slot"><span class="t">3:00</span><span>Shake + fruit<small>Or a David bar + fruit. They're interchangeable.</small></span></div>
+        <div class="slot"><span class="t">7:00</span><span>Dinner bowl<small>Ground meat + rice + veg + sauce B</small></span></div>
+        <div class="slot"><span class="t">later</span><span>If hungry: a cottage cheese or yogurt cup (~150 g)<small>Your hunger valve. It's part of the plan.</small></span></div>
+      </div>
+
+      <div class="day climb">
+        <div class="day-head"><h3>Climb day</h3><span class="pill">Wed · Fri · 4:30–6:30</span></div>
+        <div class="slot"><span class="t">7:30</span><span>Bar + fruit, or yogurt bowl</span></div>
+        <div class="slot"><span class="t">12:00</span><span>Lunch bowl</span></div>
+        <div class="slot"><span class="t c">3:30</span><span>Pre-climb fuel<small>Banana + 2 rice cakes with 10 g honey. Carbs, not a protein bar.</small></span></div>
+        <div class="slot"><span class="t c">6:40</span><span>Shake or David bar on the way home<small>Keep one in your gym bag</small></span></div>
+        <div class="slot"><span class="t">7:30</span><span>Dinner bowl with 260 g rice<small>The extra rice is your recovery</small></span></div>
+      </div>
+
+      <div class="day">
+        <div class="day-head"><h3>Saturday</h3><span class="pill">flex day</span></div>
+        <div class="slot"><span class="t">AM</span><span>Bar + fruit, or yogurt bowl<small>The anchor. Keep it even on lazy days.</small></span></div>
+        <div class="slot"><span class="t">—</span><span>Two meals, your call<small>Protein in both. One can be fully free: pizza, a burger, whatever.</small></span></div>
+        <div class="slot"><span class="t">—</span><span>Shake whenever it fits</span></div>
+      </div>
+
+      <div class="day climb">
+        <div class="day-head"><h3>Sunday</h3><span class="pill">climb noon · cook</span></div>
+        <div class="slot"><span class="t">9:30</span><span>Bar + fruit, or yogurt bowl</span></div>
+        <div class="slot"><span class="t c">11:30</span><span>Banana</span></div>
+        <div class="slot"><span class="t c">12–2</span><span>Climb</span></div>
+        <div class="slot"><span class="t">2:30</span><span>Lunch out or anything with protein<small>This is also when you shop, if you pick groceries up</small></span></div>
+        <div class="slot"><span class="t">4:30</span><span>Sunday cook<small>~50 min, 20 of them hands-on</small></span></div>
+        <div class="slot"><span class="t">6:30</span><span>First dinner bowl from the batch</span></div>
+      </div>
+    </div>
+
+    <p class="note climb"><strong>Tuesday night:</strong> move the freezer bags to the fridge. They thaw in time for Wednesday dinner.</p>
+
+    <h3 style="margin-top:6px">Break-glass meals</h3>
+    <p class="muted">When you skipped the cook, got home late, or can't face another bowl. These count as on plan.</p>
+    <div class="extras">
+      <div class="box"><h3>Rotisserie chicken bowl</h3><p>~200 g rotisserie meat, a 250 g microwave rice pouch (use ~175 g), bagged salad.</p></div>
+      <div class="box"><h3>Eggs + toast + cottage cheese</h3><p>3 eggs, 2 slices toast, a ~150 g cottage cheese cup. Ten minutes.</p></div>
+      <div class="box"><h3>Burrito-bowl place</h3><p>Double meat, rice, beans, salsa. Skip either cheese or sour cream.</p></div>
+      <div class="box"><h3>Frozen protein meal + shake</h3><p>Pick one with 30g+ protein. Keep two in the freezer as insurance.</p></div>
+    </div>
+  </section>
+
+  <!-- COOK -->
+  <section class="panel" id="cook" role="tabpanel" aria-labelledby="t-cook" hidden>
+    <h2>The Sunday cook</h2>
+    <p class="muted">The same five steps every week. Only the seasoning changes; see Flavors for this week's. Makes 11 bowls: Sunday dinner through Friday dinner.</p>
+
+    <div class="box">
+      <h3>Gear</h3>
+      <p class="muted">Rice cooker · 2 foil-lined sheet pans (foil means no scrubbing) · 1 big skillet · 2 large fridge containers · 4 gallon freezer bags</p>
+    </div>
+
+    <div class="box">
+      <ol class="steps">
+        <li><div><b>Start the rice</b><span class="muted">720 g / 1.6 lb dry rice in the rice cooker (about 4 cups). It finishes on its own.</span><div class="clock">0:00</div></div></li>
+        <li><div><b>Chicken in the oven</b><span class="muted">Oven to 425°F / 220°C. 1.4 kg / 3 lb boneless thighs on the foil-lined pans, a spray of oil, this week's chicken seasoning, toss by hand. Roast 25–30 min, to 175°F / 80°C inside.</span><div class="clock">0:05</div></div></li>
+        <li><div><b>Brown the ground meat</b><span class="muted">1.4 kg / 3 lb ground beef (93% lean) or turkey in the skillet over medium-high. Break it up, cook ~10 min until no pink, drain if needed, stir in this week's meat seasoning.</span><div class="clock">0:10</div></div></li>
+        <li><div><b>Cool</b><span class="muted">Let everything sit ~15 min. Clean the skillet now and throw the foil away.</span><div class="clock">0:35</div></div></li>
+        <li><div><b>Weigh, then split fridge / freezer</b><span class="muted">Weigh each cooked total and divide to get this week's portions (cooked yields vary, so this beats a fixed number). Then put half of each into a fridge container and half into a flat freezer bag. Fridge covers Sun–Wed lunch, freezer covers Wed dinner–Fri.</span><div class="clock">0:50 · done</div></div></li>
+      </ol>
+    </div>
+
+    <div class="box">
+      <h3>Portion math</h3>
+      <div class="flavor-grid" style="margin-top:10px">
+        <div><div class="k">Chicken · 5 lunches</div>Cooked total ÷ 5<br><span class="mono muted">typical: ~950 g → 190 g</span></div>
+        <div><div class="k">Ground meat · 6 dinners</div>Cooked total ÷ 6<br><span class="mono muted">typical: ~1,020 g → 170 g</span></div>
+        <div><div class="k">Rice · 11 bowls + 2 climb extras</div>Cooked total ÷ 12<br><span class="mono muted">typical: ~2,100 g → 175 g (260 g climb nights)</span></div>
+        <div><div class="k">Tip</div>Write the three numbers on masking tape on each container.</div>
+      </div>
+    </div>
+
+    <p class="note"><strong>Why freeze half:</strong> cooked meat and rice keep 3–4 days in the fridge. Freezing half means Friday's food is as good as Monday's.</p>
+    <p class="note"><strong>Diner week:</strong> potatoes replace rice at dinner. After the chicken comes out, roast 1.5 kg / 3.3 lb frozen diced potatoes on the pans for 25 min, weigh, divide by 6. Cook only 360 g / 0.8 lb dry rice for lunches.</p>
+  </section>
+
+  <!-- FLAVORS -->
+  <section class="panel" id="flavors" role="tabpanel" aria-labelledby="t-flavors" hidden>
+    <h2>Four-week flavor rotation</h2>
+    <p class="muted">Same cook, different week. All sauces are store-bought or two-ingredient mixes, so nothing gets chopped.</p>
+
+    <div class="chips" role="group" aria-label="Flavor week" id="flavorChips"></div>
+    <div id="flavorDetail"></div>
+
+    <h3 style="margin-top:8px">Swap-ins when a week gets old</h3>
+    <p class="muted">Replace any week with one of these. Same method.</p>
+    <div class="extras">
+      <div class="box"><h3>Tikka</h3><p>Chicken: garam masala + salt. Meat: stir a jar of tikka masala sauce into the browned meat. Sauce: plain yogurt + mango chutney.</p></div>
+      <div class="box"><h3>BBQ</h3><p>Chicken: BBQ rub. Meat: BBQ sauce stirred in. Sauces: BBQ sauce, coleslaw kit on the side.</p></div>
+      <div class="box"><h3>Italian</h3><p>Chicken: Italian seasoning + garlic. Meat: jar of marinara stirred in. Sauces: pesto, parmesan. Swap rice for pasta.</p></div>
+      <div class="box"><h3>Peanut satay</h3><p>Chicken: soy + curry powder. Meat: soy + ginger. Sauces: bottled peanut sauce, sweet chili.</p></div>
+    </div>
+  </section>
+
+  <!-- GROCERIES -->
+  <section class="panel" id="groceries" role="tabpanel" aria-labelledby="t-groceries" hidden>
+    <div class="g-head">
+      <h2>Groceries</h2>
+      <button class="btn" id="resetBtn" type="button">Uncheck all</button>
+    </div>
+    <p class="muted">Staples are the same every week. Save them as a grocery pickup order and one chore disappears.</p>
+    <div class="chips" role="group" aria-label="Flavor week for groceries" id="groceryChips"></div>
+    <div id="groceryLists" style="display:flex;flex-direction:column;gap:22px"></div>
+  </section>
+
+  <!-- CHECKINS -->
+  <section class="panel" id="checkins" role="tabpanel" aria-labelledby="t-checkins" hidden>
+    <h2>How to know it's working</h2>
+    <p class="muted">No logging. The scale is a $20 bioimpedance unit, so ignore its body-fat and muscle readings. Those are estimated from your weight and move with it. Weight trend, waist and photos are what count.</p>
+
+    <div class="box">
+      <h3>Weekly</h3>
+      <p class="muted">Step on the scale most mornings you remember, after the bathroom. Aim for 3+ times a week. Don't react to any single number.</p>
+    </div>
+    <div class="box">
+      <h3>First Sunday of each month</h3>
+      <p class="muted">Tape around your waist at the belly button, relaxed, exhaled. Front and side photo in the same spot and light. Then look at the month's average weight and pick one row below.</p>
+    </div>
+
+    <div class="rules">
+      <div class="rule"><div class="if">Down 1–3 lb, climbing feels good</div><div class="then">Change nothing. This is the plan working.</div></div>
+      <div class="rule"><div class="if">Flat for the month, but you mostly followed it</div><div class="then">Make one change: drop the evening cup, or cut dinner rice to 130 g. Only one.</div></div>
+      <div class="rule"><div class="if">Down more than 4 lb, or climbing feels flat</div><div class="then">Add rice back: 260 g at lunch on climb days too.</div></div>
+      <div class="rule"><div class="if">Up, or flat and the plan slipped</div><div class="then">Don't cut food. Figure out which default broke (usually the Sunday cook) and fix that.</div></div>
+      <div class="rule"><div class="if">Every ~12 weeks</div><div class="then">Take a maintenance week: keep the structure, add the evening cup every day and 260 g rice in every bowl. Then pick back up.</div></div>
+    </div>
+
+    <p class="note"><strong>A good week</strong> is 8 of 10 weekday bowls from the batch. Weekends don't make or break it.</p>
+    <p class="note"><strong>When you get there:</strong> maintenance is this same plan with the extra rice and evening cup kept in.</p>
+  </section>
+</div>
+
+<script>
+const FLAVORS = [
+  { name:"Korean", chicken:"3 tbsp soy sauce + 4 garlic cloves + 2 tbsp brown sugar, or 120 ml / ½ cup bulgogi marinade", meat:"2 tbsp gochujang + 2 tbsp soy + 1 tsp sesame oil", a:"Teriyaki sauce, 30 g", b:"Gochujang mayo, 30 g (2 parts light mayo : 1 part gochujang)", veg:"Frozen stir-fry veg, 150 g", carb:"Rice, 175 g cooked",
+    buy:["Frozen stir-fry veg — 1.8 kg / 4 lb (4 × 1 lb bags)","Teriyaki sauce — 1 bottle, 295 ml / 10 fl oz","Gochujang — 1 tub, 500 g / 17.6 oz (lasts months)","Light mayo — 1 jar, 887 ml / 30 fl oz (lasts months)","Bulgogi marinade — 1 bottle, 500 g / 17.6 oz (or brown sugar)","Sesame oil — small bottle (lasts months)"] },
+  { name:"Mediterranean", chicken:"2 tbsp shawarma seasoning + juice of 1 lemon", meat:"1 tsp each cumin, coriander, oregano, garlic powder + salt", a:"Tzatziki, 40 g", b:"Hummus, 40 g + squeeze of lemon", veg:"Snacking cucumbers + cherry tomatoes, 150 g, no chopping", carb:"Rice, 175 g cooked (or 1 pita, ~60 g, some nights)",
+    buy:["Snacking cucumbers — 900 g / 2 lb","Cherry tomatoes — 900 g / 2 lb (3 × 10 oz pints)","Tzatziki — 454 g / 16 oz tub","Hummus — 283 g / 10 oz tub","Lemons — 2","Shawarma seasoning — 1 jar (lasts months)","Cumin, coriander, oregano (lasts months)","Pita (optional) — 1 pack of 6"] },
+  { name:"Burrito bowl", chicken:"2 tbsp chipotle or taco seasoning + juice of 1 lime", meat:"2 taco seasoning packets + 120 ml / ½ cup water", a:"Salsa verde, 40 g", b:"Red salsa, 40 g + light sour cream, 20 g", veg:"Frozen fajita peppers & onions, 150 g", carb:"Rice, 175 g cooked + 60 g black beans",
+    buy:["Frozen fajita peppers & onions — 1.8 kg / 4 lb (4 × 1 lb bags)","Black beans, canned — 3 × 425 g / 15 oz cans","Taco seasoning — 3 packets × 28 g / 1 oz","Salsa verde — 1 jar, 454 g / 16 oz","Red salsa — 1 jar, 454 g / 16 oz","Light sour cream — 227 g / 8 oz tub","Limes — 2"] },
+  { name:"Diner", chicken:"Buffalo: roast plain, then toss with 60 ml / ¼ cup hot sauce + 15 g melted butter", meat:"1 tsp each salt, pepper, onion powder, garlic powder (burger bowl)", a:"Light ranch or blue cheese, 30 g", b:"Burger sauce, 30 g (light mayo + ketchup + relish) + pickles", veg:"Frozen green beans at lunch, shredded lettuce at dinner, 150 g", carb:"Rice at lunch; roasted potatoes at dinner (cooked total ÷ 6)",
+    buy:["Frozen diced potatoes — 1.8 kg / 4 lb (2 × 2 lb bags)","Frozen green beans — 900 g / 2 lb","Shredded lettuce — 2 × 283 g / 10 oz bags","Buffalo hot sauce — 1 bottle, 355 ml / 12 fl oz","Light ranch — 1 bottle, 473 ml / 16 fl oz","Pickle chips — 1 jar, 680 g / 24 oz","Ketchup, relish, light mayo (lasts months)","Butter (small amount)"] },
+];
+
+const STAPLES = {
+  "Protein":["Boneless chicken thighs — 1.4 kg / 3 lb","Ground beef 93% or ground turkey — 1.4 kg / 3 lb (3 × 1 lb packs)","David bars — stocked through Nov","Plain nonfat Greek yogurt — 907 g / 32 oz tub (bar mornings need less)","Cottage cheese or yogurt cups — 6 × ~150 g / 5.3 oz","Protein powder — ~900 g / 2 lb tub (lasts ~a month)"],
+  "Carbs & fruit":["Jasmine rice — 720 g / 1.6 lb a week (buy a 4.5 kg / 10 lb bag, ~6 weeks)","Granola — 340 g / 12 oz bag (~2 weeks)","Frozen berries — 454 g / 1 lb bag","Bananas, pre-climb only — 4 (Wed, Fri, Sun + 1 spare)","Apples — 6 (~1.1 kg / 2.4 lb)","Clementines — 1 bag, 1.4 kg / 3 lb (2 = one serving)","Rice cakes — 1 pack","Honey — 1 bottle, 340 g / 12 oz (lasts months)"],
+  "Supplies":["Foil","Oil spray","Gallon freezer bags","2 frozen protein meals (backup)"]
+};
+
+const START = new Date(2026,9,4); // Sun Oct 4 2026
+function currentWeek(){
+  const now = new Date();
+  if (now < START) return 0;
+  return Math.floor((now - START) / (7*86400000)) % 4;
+}
+const NOW = currentWeek();
+const beforeStart = new Date() < START;
+
+function store(){ try { return JSON.parse(localStorage.getItem("apc-checks") || "{}"); } catch(e){ return {}; } }
+function save(s){ try { localStorage.setItem("apc-checks", JSON.stringify(s)); } catch(e){} }
+let checked = store();
+
+function chipRow(el, sel, onPick){
+  el.innerHTML = "";
+  FLAVORS.forEach((f,i)=>{
+    const b = document.createElement("button");
+    b.type="button"; b.className="chip"; b.id = el.id+"-"+i;
+    b.setAttribute("aria-pressed", String(i===sel));
+    b.innerHTML = `Week ${i+1} · ${f.name}` + (i===NOW ? `<span class="now">${beforeStart?"first":"this week"}</span>` : "");
+    b.onclick = ()=>onPick(i);
+    el.appendChild(b);
+  });
+}
+
+function renderFlavor(i){
+  chipRow(document.getElementById("flavorChips"), i, renderFlavor);
+  const f = FLAVORS[i];
+  document.getElementById("flavorDetail").innerHTML = `
+    <div class="flavor-grid">
+      <div><div class="k">Chicken seasoning</div>${f.chicken}</div>
+      <div><div class="k">Ground meat seasoning</div>${f.meat}</div>
+      <div><div class="k">Sauce A · lunch</div>${f.a}</div>
+      <div><div class="k">Sauce B · dinner</div>${f.b}</div>
+      <div><div class="k">Veg</div>${f.veg}</div>
+      <div><div class="k">Carb</div>${f.carb}</div>
+    </div>`;
+}
+
+function checkItem(key, label){
+  const [name, qty] = label.split(" — ");
+  const b = document.createElement("button");
+  b.type="button"; b.className="check"; b.setAttribute("role","checkbox"); b.id = "c-"+key.replace(/[^a-z0-9]/gi,"");
+  b.setAttribute("aria-checked", String(!!checked[key]));
+  b.innerHTML = `<span class="bx"><svg viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>${name}${qty?` <span class="q">${qty}</span>`:""}</span>`;
+  b.onclick = ()=>{ checked[key] = !checked[key]; if(!checked[key]) delete checked[key]; b.setAttribute("aria-checked", String(!!checked[key])); save(checked); };
+  return b;
+}
+
+function group(title, items, prefix){
+  const g = document.createElement("div"); g.className="g-group";
+  g.innerHTML = `<div class="g-label">${title}</div>`;
+  const c = document.createElement("div"); c.className="checks";
+  items.forEach(it => c.appendChild(checkItem(prefix+"|"+it, it)));
+  g.appendChild(c); return g;
+}
+
+let groceryWeek = NOW;
+function renderGroceries(i){
+  groceryWeek = i;
+  chipRow(document.getElementById("groceryChips"), i, renderGroceries);
+  const wrap = document.getElementById("groceryLists"); wrap.innerHTML="";
+  wrap.appendChild(group(`Week ${i+1} flavor · ${FLAVORS[i].name}`, FLAVORS[i].buy, "w"+i));
+  Object.entries(STAPLES).forEach(([t,items]) => wrap.appendChild(group("Staples · "+t, items, "s")));
+}
+document.getElementById("resetBtn").onclick = ()=>{ checked = {}; save(checked); renderGroceries(groceryWeek); };
+
+const tabs = [...document.querySelectorAll(".tab")];
+function showTab(id){
+  if (!document.getElementById(id)) id = "plan";
+  tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.tab===id)));
+  document.querySelectorAll(".panel").forEach(p => p.hidden = p.id !== id);
+  try { history.replaceState(null,"","#"+id); } catch(e){}
+}
+tabs.forEach(t => t.onclick = ()=>{ showTab(t.dataset.tab); window.scrollTo({top:0}); });
+
+renderFlavor(NOW);
+renderGroceries(NOW);
+showTab((location.hash||"").slice(1) || "plan");
+</script>
+
+</body></html>
